@@ -46,17 +46,17 @@ ms_institution = ET.SubElement(ms_database_metadata, 'institution')
 ms_institution_name = ET.SubElement(ms_institution, 'institution_name')
 ms_institution_name.text = 'MorphoSource'
 
-# # DDR database 
-# ddr_database = ET.SubElement(body, 'database')
+# DDR database 
+ddr_database = ET.SubElement(body, 'database')
 
-# # DDR Database metadata
-# ddr_database_metadata = ET.SubElement(ddr_database, 'database_metadata', {'language' : 'en'})
-# ddr_titles = ET.SubElement(ddr_database_metadata, 'titles')
-# ddr_title = ET.SubElement(ddr_titles, 'title')
-# ddr_title.text = 'Duke Digital Repository'
-# ddr_institution = ET.SubElement(ddr_database_metadata, 'institution')
-# ddr_institution_name = ET.SubElement(ddr_institution, 'institution_name')
-# ddr_institution_name.text = 'Duke University Libraries'
+# DDR Database metadata
+ddr_database_metadata = ET.SubElement(ddr_database, 'database_metadata', {'language' : 'en'})
+ddr_titles = ET.SubElement(ddr_database_metadata, 'titles')
+ddr_title = ET.SubElement(ddr_titles, 'title')
+ddr_title.text = 'Duke Digital Repository'
+ddr_institution = ET.SubElement(ddr_database_metadata, 'institution')
+ddr_institution_name = ET.SubElement(ddr_institution, 'institution_name')
+ddr_institution_name.text = 'Duke University Libraries'
 
 # Datasets (one per DOI)
 # loop through doi records
@@ -68,46 +68,56 @@ for record in t_records:
 		for k, v in element.attrib.items():
 			record_dict[v] = element.text
 
-	if record_dict['_owner'] == 'duke_morpho':
-		# Construct MS CrossRef metadata tags
-		dataset = ET.SubElement(ms_database, 'dataset', {'dataset_type' : 'record'})
+	# Construct CrossRef metadata tags
 
+	if record_dict['_owner'] == 'duke_morpho':
+		dataset = ET.SubElement(ms_database, 'dataset', {'dataset_type' : 'record'})
+	else:
+		dataset = ET.SubElement(ddr_database, 'dataset', {'dataset_type' : 'record'})
+
+	if 'datacite.creator' in record_dict:
 		contributors = ET.SubElement(dataset, 'contributors')
 		person_name = ET.SubElement(contributors, 'person_name', {
 			'contributor_role' : 'author',
 			'sequence' : 'first' 
 		})
-		fname, lname = record_dict['datacite.creator'].rsplit(' ', 1)
+
+		full_name = record_dict['datacite.creator']
+		if ';' in full_name:
+			full_name = full_name.split(';')[0]
+		if ',' in full_name:
+			lname, fname = full_name.split(',', 1)
+		else:
+			fname, lname = full_name.rsplit(' ', 1)
+
 		given_name = ET.SubElement(person_name, 'given_name')
 		given_name.text = fname
 		surname = ET.SubElement(person_name, 'surname')
 		surname.text = lname
 
+	if 'title' in record_dict:
 		titles = ET.SubElement(dataset, 'titles')
 		title = ET.SubElement(titles, 'title')
 		title.text = record_dict['datacite.title']
 
+	if 'datacite.publicationyear' in record_dict:
 		database_date = ET.SubElement(dataset, 'database_date')
 		publication_date = ET.SubElement(database_date, 'publication_date')
 		year = ET.SubElement(publication_date, 'year')
 		year.text = record_dict['datacite.publicationyear']
 
-		doi_data = ET.SubElement(dataset, 'doi_data')
-		doi = ET.SubElement(doi_data, 'doi')
-		doi.text = record_dict['doi']
-		resource = ET.SubElement(doi_data, 'resource')
-		resource.text = record_dict['_target']
-
+	if 'datacite.resourcetype' in record_dict:
 		ds_format = ET.SubElement(dataset, 'format')
 		ds_format.text = record_dict['datacite.resourcetype']
 
-	# else:
-	# 	# Construct non-MS CrossRef metadata tags
-	# 	dataset = ET.SubElement(ms_database, 'dataset', {'dataset_type' : 'collection'})
-
+	doi_data = ET.SubElement(dataset, 'doi_data')
+	doi = ET.SubElement(doi_data, 'doi')
+	doi.text = record_dict['doi'].replace('doi:', '')
+	resource = ET.SubElement(doi_data, 'resource')
+	resource.text = record_dict['_target']
 
 new_tree = ET.ElementTree(doi_batch)
-new_tree.write('ms_generated_crossref_dataset.xml')
+new_tree.write('dul_generated_crossref_dataset.xml')
 
 
 
