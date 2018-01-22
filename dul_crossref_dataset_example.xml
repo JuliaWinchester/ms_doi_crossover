@@ -1,0 +1,82 @@
+<doi_batch xmlns="http://www.crossref.org/schema/4.3.7" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="4.3.7" xsi:schemaLocation="http://www.crossref.org/schema/4.3.7 http://www.crossref.org/schemas/crossref4.3.7.xsd">
+<head>
+<doi_batch_id>2006-03-24-21-57-31-10023</doi_batch_id> <!-- presumably doi_batch_id is system-generated -->
+<timestamp>20060324215731</timestamp>
+<depositor>
+<depositor_name>Duke University Libraries</depositor_name>
+<email_address>ddrhelp@duke.edu</email_address>
+</depositor>
+<registrant>Duke University Libraries</registrant>
+</head>
+
+
+<body>
+
+	
+<database>
+<database_metadata language="en">
+<titles>
+<title>Morphosource Models</title>
+</titles>
+<institution>
+<institution_name>MorphoSource.org</institution_name>
+</institution>
+</database_metadata>
+<dataset dataset_type="collection">
+<contributors>
+<person_name contributor_role="author" sequence="first">
+<given_name>Justin</given_name>
+<surname>Adams</surname>
+</person_name>
+</contributors>
+<titles>
+<title>
+M10047 from DNMNH Archive</title>
+</titles>
+<database_date>
+<publication_date>2016</publication_date>
+</database_date>
+<doi_data>
+<doi>doi:10.17602/M2/M10047</doi>
+<resource>
+http://MorphoSource.org/index.php/Detail/MediaDetail/Show/media_file_id/10047
+</resource>
+</doi_data>
+</dataset>
+</database>
+
+
+
+
+<database>
+<database_metadata language="en">
+<titles>
+<title>Duke Digital Repository Datasets</title>
+</titles>
+<institution>
+<institution_name>Duke Digital Repository</institution_name>
+</institution>
+</database_metadata>
+<dataset dataset_type="collection">
+<contributors>
+<person_name contributor_role="author" sequence="first">
+<given_name>Patrick</given_name>
+<surname>Charbonneau</surname>
+</person_name>
+</contributors>
+<titles>
+<title>
+Data and scripts for the figures of Zhuang and Charbonneau, J. Phys. Chem. B, (2016).</title>
+</titles>
+<database_date>
+<publication_date>2016</publication_date>
+</database_date>
+<doi_data>
+<doi>doi:10.7924/G8057CVF</doi>
+<resource>
+https://repository.lib.duke.edu/id/ark:/87924/r44x54z92</resource>
+</doi_data>
+</dataset>
+</database>
+</body>
+</doi_batch>
