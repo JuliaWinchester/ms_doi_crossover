@@ -95,7 +95,7 @@ for record in t_records:
 		surname = ET.SubElement(person_name, 'surname')
 		surname.text = lname
 
-	if 'title' in record_dict:
+	if 'datacite.title' in record_dict:
 		titles = ET.SubElement(dataset, 'titles')
 		title = ET.SubElement(titles, 'title')
 		title.text = record_dict['datacite.title']
